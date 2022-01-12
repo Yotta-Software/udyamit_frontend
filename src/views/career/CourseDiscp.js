@@ -54,8 +54,8 @@ function CourseDiscp() {
                   // salary: "9999"
                   // syllabus_url: "http://localhost/pdf"
                   // title: "job 2"
-                  // __v: 0
-                  // _id:
+                  // __v: 0 // http://localhost:8080/download"
+                  // _id: -> `${config.baseUrl}/api/v1/auth/forgotpassword`
                 }
                 <h5 class="card-subtitle mb-2 text-muted">Job Description</h5>
                 <p class="card-text">{job.description}</p>
@@ -65,8 +65,7 @@ function CourseDiscp() {
 
                 <h5 class="card-subtitle mb-2 text-muted">
                   Educational Qualification : {job.qualification}
-                  <a href="http://localhost:8080/download" download>
-                    {" "}
+                  <a href={`${config.baseUrl}/download`} download>
                     download syllabus
                   </a>
                 </h5>
