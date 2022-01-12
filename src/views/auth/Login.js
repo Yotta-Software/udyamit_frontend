@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { app } from '../../auth/auth'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { config } from '../../config';
 import axios from 'axios';
 
 function Login() {
@@ -22,8 +23,8 @@ function Login() {
     if (data.password === '') {
       toast.error('Please enter password!')
       return
-    }
-    fetch('https://udyamit.in/api/v1/auth/login',{
+    }//`${config.baseUrl}/api/v1/auth/register`
+    fetch(`${config.baseUrl}/api/v1/auth/login`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

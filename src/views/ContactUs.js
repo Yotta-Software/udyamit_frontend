@@ -1,6 +1,38 @@
-import React from 'react'
-
+import React ,{useState} from 'react'
+import { toast } from 'react-toastify';
+import { config } from '../config';
 function ContactUs() {
+  const [name,setName]=useState('');
+  const [reason,setReason]=useState('');
+  const [email,setEmail]=useState('');
+  const [number,setNumber]=useState('');
+  const [message,setMessage]=useState('');
+  const handleSubmit = ()=>{
+    fetch(`${config.baseUrl}/contactus`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({  name,
+        reason,
+        email,
+        number,
+        message,
+      }) 
+    }).then(res=>{
+      let promise=res.json();
+      if(res.status===200){
+        promise.then(data=>{
+          console.log(data);
+          toast.success('Your request is successfully submitted ,We will contact you soon !')
+        })
+      }else{
+        promise.then(err=>{
+        toast.error(err.message);
+        })
+      }
+    })
+  }
   return (
     <div class='container' style={{ width: '50%' }}>
       <center>
@@ -15,8 +47,8 @@ function ContactUs() {
         <b>Phone</b> : <a href='tel:+91 9315590050'>+91 9815880885</a>
       </p>
       <p>
-        <b>Email :</b> <a href='mailto:admin@udyamit.in'>admin@udyamit.in</a>
-        <br /> <br />
+        {/*  <a href='mailto:admin@udyamit.in'>admin@udyamit.in</a> */}
+        <b>Email :</b>
         <a href='mailto:udyamit@gmail.com'>udyamit@gmail.com</a>
       </p>
       <div className='card'>
@@ -34,6 +66,9 @@ function ContactUs() {
                   className='form-control'
                   placeholder='Enter your name'
                   name='role'
+                  required
+                  value={name}
+                  onChange={e=>setName(e.target.value)}
                 />
               </div>
             </div>
@@ -41,13 +76,13 @@ function ContactUs() {
               <label for='exampleDataList' class='form-label'>
                 Reason
               </label>
-              <select class='form-select' aria-label='Default select example'>
-                <option value='0' selected>
+              <select class='form-select' aria-label='Default select example' onChange={e=>setReason(e.target.value)}>
+                <option value='Payment' selected>
                   Payment
                 </option>
-                <option value='1'>Query</option>
-                <option value='2'>Admission</option>
-                <option value='3'>Exam</option>
+                <option value='Query'>Query</option>
+                <option value='Admission'>Admission</option>
+                <option value='Exam'>Exam</option>
               </select>
             </div>
             <div className='col-md-12 col-sm-12'>
@@ -60,6 +95,9 @@ function ContactUs() {
                   className='form-control'
                   placeholder='enter your email'
                   name='experience'
+                  required
+                  value={email}
+                  onChange={e=>setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -73,6 +111,9 @@ function ContactUs() {
                   className='form-control'
                   placeholder='enter your phone number'
                   name='experience'
+                  required
+                  value={number}
+                  onChange={e=>setNumber(e.target.value)}
                 />
               </div>
             </div>
@@ -86,11 +127,14 @@ function ContactUs() {
                   className='form-control'
                   placeholder='write your message'
                   name='experience'
+                  required
+                  value={message}
+                  onChange={e=>setMessage(e.target.value)}
                 />
               </div>
             </div>
           </div>
-          <button type='button' className='btn btn-dark'>
+          <button type='button' className='btn btn-dark'onClick={handleSubmit}>
             Submit <i className='fas fa-long-arrow-alt-right'></i>
           </button>
         </div>

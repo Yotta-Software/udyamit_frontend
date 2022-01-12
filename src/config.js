@@ -1,5 +1,5 @@
 export const config = {
-  baseUrl: "https://udyamit.in", //"https://seedonline.org",,"https://udyamit.in"
+  baseUrl: "http://localhost:4000", //"https://seedonline.org",,"https://udyamit.in"
   register: "/api/reg",
   personal: "/api/personal",
   address: "/api/address",

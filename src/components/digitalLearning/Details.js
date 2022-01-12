@@ -5,9 +5,11 @@ import { app } from "../../auth/auth";
 import { getAuth } from "firebase/auth";
 import coursePay from "../../utils/coursePay";
 import { toast } from 'react-toastify';
+import { config } from '../../config';
 function CourseDetails() {
   const auth = getAuth(app);
   // pay(jobId, auth?.currentUser?.uid, res.data.body);
+  
   const history = useHistory();
   let { cid } = useParams();
 
@@ -20,7 +22,8 @@ function CourseDetails() {
       return;
     }
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    fetch('https://udyamit.in/subscription',{
+    //`${config.baseUrl}/subscription`
+    fetch(`${config.baseUrl}/subscription`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

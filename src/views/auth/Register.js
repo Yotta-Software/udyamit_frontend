@@ -2,8 +2,8 @@ import React from 'react'
 import login from '../../asstes/logo/favicon.png'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
-import { config } from '../../config'
-import { toast } from 'react-toastify'
+import { config } from '../../config';
+import { toast } from 'react-toastify';
 
 function Register() {
   const history = useHistory()
@@ -31,8 +31,8 @@ function Register() {
       toast.error('Password and confirm password does not  matched!')
       return
     }
-   //config.baseUrl + config.register
-      fetch('https://udyamit.in/api/v1/auth/register',{
+     //config.baseUrl + config.register
+      fetch(`${config.baseUrl}/api/v1/auth/register`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

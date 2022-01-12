@@ -89,7 +89,8 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
       category:category?category:"GEN"
     }
     dataToSubmit.isJobOutsideIndia=dataToSubmit.isJobOutsideIndia==="Yes"?true:false;
-    fetch('https://udyamit.in/applyjob',{
+    //`${config.baseUrl}/applyjob`
+    fetch(`${config.baseUrl}/applyjob`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

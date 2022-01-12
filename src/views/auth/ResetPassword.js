@@ -4,6 +4,7 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { app } from "../../auth/auth";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { config } from '../../config';
 
 function ResetPassword() {
   const history = useHistory();
@@ -17,7 +18,8 @@ function ResetPassword() {
       return;
     }
     console.log(data);
-    fetch('https://udyamit.in/api/v1/auth/forgotpassword',{
+    //`${config.baseUrl}/api/v1/auth/forgotpassword`
+    fetch(`${config.baseUrl}/api/v1/auth/forgotpassword`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

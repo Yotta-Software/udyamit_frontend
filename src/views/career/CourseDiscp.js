@@ -2,7 +2,9 @@ import React from 'react'
 import desc from '../../asstes/desc.jpg'
 import { useHistory, useParams } from 'react-router-dom'
 import { getJob } from '../../utils/dataApi'
-
+import fileDownload from 'js-file-download';
+import { toast } from 'react-toastify';
+import { config } from '../../config';
 function CourseDiscp() {
   const history = useHistory()
   let { id } = useParams()
@@ -19,7 +21,15 @@ function CourseDiscp() {
       setJob(null)
     }
   }, [])
-
+const download=(e)=>{
+  fetch(`${config.baseUrl}/download`)
+  .then(res=>{
+    let promise = res.json();
+    promise.then((data)=>{
+      console.log(data)
+    })
+  })
+}
   return (
     <div className='container'>
       <div
@@ -56,9 +66,7 @@ function CourseDiscp() {
 
                 <h5 class='card-subtitle mb-2 text-muted'>
                   Educational Qualification : {job.qualification}
-                  <a href={job.syllabus_url}>
-                    <i class='fas fa-link'></i>
-                  </a>
+                  <a href="http://localhost:4000/download" download> download syllabus</a>
                 </h5>
 
                 <h5 class='card-subtitle mb-2 text-muted'>
