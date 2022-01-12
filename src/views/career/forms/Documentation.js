@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { config } from "../../../config";
 import { toast } from "react-toastify";
@@ -8,13 +8,21 @@ import { getAuth } from "firebase/auth";
 
 function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
   const auth = getAuth(app);
-  const [showpayBtn,setShowpayBtn]=useState(false);
+  const [showpayBtn, setShowpayBtn] = useState(false);
   const [data, setData] = React.useState({
-    signature:localStorage.getItem('signature')?localStorage.getItem('signature'): "",
-    photo: localStorage.getItem('photo')?localStorage.getItem('photo'): "",
-    idBack:localStorage.getItem('idBack')?localStorage.getItem('idBack'): "",
-    idFront:localStorage.getItem('idFront')?localStorage.getItem('idFront'): "",
-    idName: localStorage.getItem('idName')?localStorage.getItem('idName'): "",
+    signature: localStorage.getItem("signature")
+      ? localStorage.getItem("signature")
+      : "",
+    photo: localStorage.getItem("photo") ? localStorage.getItem("photo") : "",
+    idBack: localStorage.getItem("idBack")
+      ? localStorage.getItem("idBack")
+      : "",
+    idFront: localStorage.getItem("idFront")
+      ? localStorage.getItem("idFront")
+      : "",
+    idName: localStorage.getItem("idName")
+      ? localStorage.getItem("idName")
+      : "",
   });
 
   const [error, setError] = React.useState({
@@ -32,7 +40,7 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
   };
   const saveAndContinue = (e) => {
     e.preventDefault();
-    if (!localStorage.getItem('signature')) {
+    if (!localStorage.getItem("signature")) {
       setError({
         signature: "Please upload signature",
         photo: "",
@@ -42,7 +50,7 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
       });
       return;
     }
-    if (!localStorage.getItem('photo')) {
+    if (!localStorage.getItem("photo")) {
       setError({
         signature: "",
         photo: "Please upload your photo",
@@ -52,7 +60,7 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
       });
       return;
     }
-    if (!localStorage.getItem('idFront')) {
+    if (!localStorage.getItem("idFront")) {
       setError({
         signature: "",
         photo: "",
@@ -62,68 +70,71 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
       });
       return;
     }
-    const personalData=JSON.parse(localStorage.getItem("personalData"));
-    const applicantDetails=JSON.parse(localStorage.getItem("applicantDetails"));
-    const selectedJob=JSON.parse(localStorage.getItem("selectedJob"));
-    console.log("selectedJob",selectedJob.application_fee);
-    const jobLocation=JSON.parse(localStorage.getItem("jobLocation"));
-    const qulification=JSON.parse(localStorage.getItem("qulification"));
-    const userInfo=JSON.parse(localStorage.getItem("userInfo"));
-    const signature=localStorage.getItem("signature");
-    const photo=localStorage.getItem("photo");
-    const idFront=localStorage.getItem("idFront");
-    const idBack=localStorage.getItem("idBack");
-    const category=localStorage.getItem("category");
-    const dataToSubmit={
-     ...personalData,
-     ...applicantDetails,
-     ...jobLocation,
-     ...qulification,
+    const personalData = JSON.parse(localStorage.getItem("personalData"));
+    const applicantDetails = JSON.parse(
+      localStorage.getItem("applicantDetails")
+    );
+    const selectedJob = JSON.parse(localStorage.getItem("selectedJob"));
+    console.log("selectedJob", selectedJob.application_fee);
+    const jobLocation = JSON.parse(localStorage.getItem("jobLocation"));
+    const qulification = JSON.parse(localStorage.getItem("qulification"));
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const signature = localStorage.getItem("signature");
+    const photo = localStorage.getItem("photo");
+    const idFront = localStorage.getItem("idFront");
+    const idBack = localStorage.getItem("idBack");
+    const category = localStorage.getItem("category");
+    const dataToSubmit = {
+      ...personalData,
+      ...applicantDetails,
+      ...jobLocation,
+      ...qulification,
       signature,
       photo,
       idFront,
       idBack,
       jobApplyId,
       jobId,
-      user:userInfo._id,
-      category:category?category:"GEN"
-    }
-    dataToSubmit.isJobOutsideIndia=dataToSubmit.isJobOutsideIndia==="Yes"?true:false;
+      user: userInfo._id,
+      category: category ? category : "GEN",
+    };
+    dataToSubmit.isJobOutsideIndia =
+      dataToSubmit.isJobOutsideIndia === "Yes" ? true : false;
     //`${config.baseUrl}/applyjob`
-    fetch(`${config.baseUrl}/applyjob`,{
-      method: 'POST',
+    fetch(`${config.baseUrl}/applyjob`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(dataToSubmit) 
-    }).then(res=>{
-      let promise=res.json();
-      if(res.status===201){
-        promise.then(data=>{
-          toast.info('Successfully submitted');
-          localStorage.removeItem('')
-          if(localStorage.getItem('category')==='SC'){
-            localStorage.removeItem('category');
-            document.location.href="https://pmny.in/WIEiVEY4w9PB"
-            return 
+      body: JSON.stringify(dataToSubmit),
+    }).then((res) => {
+      let promise = res.json();
+      if (res.status === 201) {
+        promise.then((data) => {
+          toast.info("Successfully submitted");
+          localStorage.removeItem("");
+          if (localStorage.getItem("category") === "SC") {
+            localStorage.removeItem("category");
+            document.location.href = "https://pmny.in/WIEiVEY4w9PB";
+            return;
           }
-          if(localStorage.getItem('category')==='PC'){
-            document.location.href="https://pmny.in/WIEiVEY4w9PB"
-            return 
+          if (localStorage.getItem("category") === "PC") {
+            document.location.href = "https://pmny.in/WIEiVEY4w9PB";
+            return;
           }
-          if(selectedJob.application_fee==="380"){
-            document.location.href="https://pmny.in/yILKXujmWl5Y"
+          if (selectedJob.application_fee === "380") {
+            document.location.href = "https://pmny.in/yILKXujmWl5Y";
           }
-          if(selectedJob.application_fee==="300"){
-            document.location.href="https://pmny.in/KrA5lTam0RR3"
+          if (selectedJob.application_fee === "300") {
+            document.location.href = "https://pmny.in/KrA5lTam0RR3";
           }
-        })
-      }else{
-        promise.then(err=>{
-        toast.error(err.message);
-        })
+        });
+      } else {
+        promise.then((err) => {
+          toast.error(err.message);
+        });
       }
-    })
+    });
     console.log(dataToSubmit);
   };
 
@@ -132,36 +143,33 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
     data.idName = e.target.value;
   };
 
- 
-
-    const handleFile = (e) => {
+  const handleFile = (e) => {
     const formData = new FormData();
     let file = e.target.files[0];
     formData.append("file", file, file.name);
     formData.append("name", e.target.name);
     //config.baseUrl + config.upload
     axios
-      .post('http://localhost:4000/uploads', formData, {
+      .post("http://localhost:8080/uploads", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-         console.log("file", res.data.data.url);
-         if(e.target.name==="signature"){
-           localStorage.setItem("signature",res.data.data.url)
-         }
-         if(e.target.name==="photo"){
-          localStorage.setItem("photo",res.data.data.url)
-         }
-         console.log(e.target.name);
-         if(e.target.name==="idFront"){
-          localStorage.setItem("idFront",res.data.data.url)
-         }
-         if(e.target.name==="idBack"){
-          localStorage.setItem("idBack",res.data.data.url)
-         }
-       
+        console.log("file", res.data.data.url);
+        if (e.target.name === "signature") {
+          localStorage.setItem("signature", res.data.data.url);
+        }
+        if (e.target.name === "photo") {
+          localStorage.setItem("photo", res.data.data.url);
+        }
+        console.log(e.target.name);
+        if (e.target.name === "idFront") {
+          localStorage.setItem("idFront", res.data.data.url);
+        }
+        if (e.target.name === "idBack") {
+          localStorage.setItem("idBack", res.data.data.url);
+        }
       })
       .catch((err) => {
         console.log("err", err);
@@ -185,8 +193,7 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
   React.useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
   });
- 
- 
+
   return (
     <div>
       <div className="card">
@@ -214,11 +221,15 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
                 {/* <div class="spinner-border text-danger" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div> */}
-                {
-                  localStorage.getItem('signature')?(<a href={
-                    localStorage.getItem('signature')
-                  } target="_blank" rel="noreferrer">See Uploaded Signature</a>):null
-                }
+                {localStorage.getItem("signature") ? (
+                  <a
+                    href={localStorage.getItem("signature")}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    See Uploaded Signature
+                  </a>
+                ) : null}
               </div>
             </div>
 
@@ -239,11 +250,15 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
                   onChange={handleFile}
                 />
                 <p style={{ color: "red" }}>{error?.photo}</p>
-                {
-                  localStorage.getItem('photo')?(<a href={
-                    localStorage.getItem('photo')
-                  } target="_blank" rel="noreferrer">See Uploaded photo</a>):null
-                }
+                {localStorage.getItem("photo") ? (
+                  <a
+                    href={localStorage.getItem("photo")}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    See Uploaded photo
+                  </a>
+                ) : null}
               </div>
             </div>
             <div className="col-md-12 col-sm-12">
@@ -282,11 +297,15 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
                   onChange={handleFile}
                 />{" "}
                 <p style={{ color: "red" }}>{error?.idFront}</p>
-                {
-                  localStorage.getItem('idFront')?(<a href={
-                    localStorage.getItem('idFront')
-                  } target="_blank" rel="noreferrer">See Uploaded Document Front</a>):null
-                }
+                {localStorage.getItem("idFront") ? (
+                  <a
+                    href={localStorage.getItem("idFront")}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    See Uploaded Document Front
+                  </a>
+                ) : null}
               </div>
             </div>
             <div
@@ -310,42 +329,43 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
                 />{" "}
                 <p style={{ color: "red" }}>{error?.idBack}</p>
                 <p style={{ color: "red" }}>{error?.idFront}</p>
-                {
-                  localStorage.getItem('idBack')?(<a href={
-                    localStorage.getItem('idBack')
-                  } target="_blank" rel="noreferrer">See Uploaded Document Back</a>):null
-                }
+                {localStorage.getItem("idBack") ? (
+                  <a
+                    href={localStorage.getItem("idBack")}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    See Uploaded Document Back
+                  </a>
+                ) : null}
               </div>
             </div>
 
-  
-  <div className="col-md-12 col-sm-12">
-  <button
-    type="button"
-    className="btn btn-dark"
-    style={{ marginRight: 10 }}
-    onClick={back}
-  >
-    Back 
-  </button>
-  <button
-    type="button"
-    className="btn btn-dark"
-    onClick={saveAndContinue}
-  >
-   Submit 
-  </button>
-  <button
-    type="button"
-    className="btn btn-dark"
-    style={{marginLeft:"10px"}}
-    onClick={()=>document.location.reload()}
-  >
-  Review
-  </button>
-</div>
-
-            
+            <div className="col-md-12 col-sm-12">
+              <button
+                type="button"
+                className="btn btn-dark"
+                style={{ marginRight: 10 }}
+                onClick={back}
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                className="btn btn-dark"
+                onClick={saveAndContinue}
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                className="btn btn-dark"
+                style={{ marginLeft: "10px" }}
+                onClick={() => document.location.reload()}
+              >
+                Review
+              </button>
+            </div>
           </div>
         </div>
       </div>

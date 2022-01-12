@@ -4,17 +4,21 @@ import { config } from "../../../config";
 import { toast } from "react-toastify";
 
 function Personal({ nextStep, jobId, user, jobApplyId }) {
-  const personalData=localStorage.getItem("personalData")?JSON.parse(localStorage.getItem("personalData")):null;
+  const personalData = localStorage.getItem("personalData")
+    ? JSON.parse(localStorage.getItem("personalData"))
+    : null;
   const [data, setData] = React.useState({
     email: user?.email,
-    fatherName: personalData?personalData.fatherName:"",
-    fname: personalData?personalData.fname:"",
-    gender:personalData?personalData.gender:"",
-    lname: personalData?personalData.lname:"",
-    motherName:personalData?personalData.motherName:"",
-    phone: personalData?personalData.phone:"",
-    religion: personalData?personalData.religion:"",
-    dob:personalData?personalData.dob: new Date().toLocaleDateString("en-CA"),
+    fatherName: personalData ? personalData.fatherName : "",
+    fname: personalData ? personalData.fname : "",
+    gender: personalData ? personalData.gender : "",
+    lname: personalData ? personalData.lname : "",
+    motherName: personalData ? personalData.motherName : "",
+    phone: personalData ? personalData.phone : "",
+    religion: personalData ? personalData.religion : "",
+    dob: personalData
+      ? personalData.dob
+      : new Date().toLocaleDateString("en-CA"),
   });
   const [error, setError] = React.useState({
     email: "",
@@ -97,11 +101,11 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
       });
       return;
     }
-//config.baseUrl + config.personal
+    //config.baseUrl + config.personal
     // data.jobApplyId = jobApplyId;
     // data.jobId = jobId;
     // axios
-    //   .post('http://localhost:4000/api/personal', data)
+    //   .post('http://localhost:8080/api/personal', data)
     //   .then((res) => {
     //     if (res.status === 201) {
     //       toast.info("you are already apply this job.");
@@ -114,10 +118,10 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
     //   .catch((err) => {
     //     toast.error("Internal server error");
     //   });
-    localStorage.setItem("personalData",JSON.stringify(data));
+    localStorage.setItem("personalData", JSON.stringify(data));
     nextStep();
   };
- 
+
   return (
     <div>
       <div className="card">
@@ -195,7 +199,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
                   id="exampleRadios1"
                   value="male"
                   onChange={handleChange}
-                  checked={data.gender==="male"?true:false}
+                  checked={data.gender === "male" ? true : false}
                 />
                 <label class="form-check-label" for="exampleRadios1">
                   Male
@@ -209,7 +213,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
                   id="exampleRadios2"
                   value="female"
                   onChange={handleChange}
-                  checked={data.gender==="female"?true:false}
+                  checked={data.gender === "female" ? true : false}
                 />
                 <label class="form-check-label" for="exampleRadios2">
                   Female
@@ -223,7 +227,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
                   id="exampleRadios3"
                   value="other"
                   onChange={handleChange}
-                  checked={data.gender==="other"?true:false}
+                  checked={data.gender === "other" ? true : false}
                 />
                 <label class="form-check-label" for="exampleRadios3">
                   Other
@@ -274,7 +278,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
                   id="exampleRadios11"
                   value="hindu"
                   onChange={handleChange}
-                  checked={data.religion==="hindu"?true:false}
+                  checked={data.religion === "hindu" ? true : false}
                 />
                 <label class="form-check-label" for="exampleRadios11">
                   Hindu / हिंदू
@@ -288,7 +292,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
                   id="exampleRadios21"
                   value="muslim"
                   onChange={handleChange}
-                  checked={data.religion==="muslim"?true:false}
+                  checked={data.religion === "muslim" ? true : false}
                 />
                 <label class="form-check-label" for="exampleRadios21">
                   Muslim / मुस्लिम
@@ -302,7 +306,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
                   id="exampleRadios31"
                   value="sikh"
                   onChange={handleChange}
-                  checked={data.religion==="sikh"?true:false}
+                  checked={data.religion === "sikh" ? true : false}
                 />
                 <label class="form-check-label" for="exampleRadios31">
                   Sikh / सीख
@@ -316,7 +320,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
                   id="exampleRadios32"
                   value="christian"
                   onChange={handleChange}
-                  checked={data.religion==="christian"?true:false}
+                  checked={data.religion === "christian" ? true : false}
                 />
                 <label class="form-check-label" for="exampleRadios32">
                   Christian / इसाई
@@ -344,7 +348,7 @@ function Personal({ nextStep, jobId, user, jobApplyId }) {
             type="button"
             className="btn btn-dark"
             onClick={saveAndContinue}
-           >
+          >
             Next <i className="fas fa-long-arrow-alt-right"></i>
           </button>
         </div>
