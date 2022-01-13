@@ -8,6 +8,9 @@ function ContactUs() {
   const [number,setNumber]=useState('');
   const [message,setMessage]=useState('');
   const handleSubmit = ()=>{
+    if(name===''|| email===''|| reason===''|| number===''|| message==='' ){
+      return  toast.error('Please fill all fields !');
+    }
     fetch(`${config.baseUrl}/contactus`,{
       method: 'POST',
       headers: {
@@ -24,7 +27,7 @@ function ContactUs() {
       if(res.status===200){
         promise.then(data=>{
           console.log(data);
-          toast.success('Your request is successfully submitted ,We will contact you soon !')
+          toast.success('Your request is successfully submitted ,We will contact you soon !');
         })
       }else{
         promise.then(err=>{

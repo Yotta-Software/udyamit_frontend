@@ -150,7 +150,7 @@ function Documentation({ prevStep, nextStep, jobId, jobApplyId }) {
     formData.append("name", e.target.name);
     //config.baseUrl + config.upload
     axios
-      .post("http://localhost:8080/uploads", formData, {
+      .post(`${config.baseUrl}/uploads`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
