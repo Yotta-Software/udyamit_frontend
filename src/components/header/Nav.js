@@ -86,7 +86,7 @@ function Nav() {
                   data-bs-toggle='dropdown'
                   aria-expanded='false'
                 >
-                  About US
+                  About 
                 </a>
                 <ul class='dropdown-menu'>
                   <li>
@@ -138,7 +138,7 @@ function Nav() {
                   aria-expanded='false'
                 >
                   {/* {' '} */}
-                  Gallary
+                  Gallery
                 </a>
                 <ul class='dropdown-menu'>
                   <li>
